@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "Consumer-properties.path",
+    "type": "java.lang.String",
+    "description": "A description for 'Consumer-properties.path'"
+  },
+  {
+    "name": "Producer-properties.path",
+    "type": "java.lang.String",
+    "description": "A description for 'Producer-properties.path'"
+  }
+]}
