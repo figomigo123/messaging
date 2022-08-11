@@ -25,26 +25,3 @@ socket.onerror = function(error) {
     alert(`[error] ${error.message}`);
 };
 
-
-function send() {
-    let msg = document.getElementById("message").value;
-
-   let  dataO = {
-        message: msg
-    };
-
-    let json = JSON2.stringify(dataO);
-
-    $.ajax({
-        type: "POST",
-        url: "test/sendMessagetoFirstQueue",
-        data: json,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function(msg) {
-
-        }
-    });
-
-
-}

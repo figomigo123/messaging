@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +23,7 @@ public class WebController {
     private BrokerService brokerService;
 
     @PostMapping("/sendMessagetoFirstQueue")
-   // @MessageMapping("/hello")
-    @SendTo("/websocket")
+
     public ResponseEntity<?> publishMessageToFirstQueue(@RequestBody MyMessage myMessage) {
 
         jmsTemplate.convertAndSend("first-Queue", myMessage);
@@ -40,6 +37,7 @@ public class WebController {
         jmsTemplate.convertAndSend("second-Queue", myMessage);
         return new ResponseEntity<>("sent", HttpStatus.OK);
     }
+
     @PostMapping("/consumer")
     public ResponseEntity<?> addConsumer(@RequestBody FileWriterConsumer consumer) {
         brokerService.addConsumer(consumer);

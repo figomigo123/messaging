@@ -74,13 +74,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-reactor-netty</artifactId>
 		</dependency>
+		<!-- end for websocket-->
+
+
+
+		<!--for render html-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 
-
+		<!--for render html-->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

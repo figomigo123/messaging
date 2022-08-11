@@ -1,25 +1,19 @@
 package com.example.demo.jms.broker;
 
-import javax.annotation.PostConstruct;
-import javax.jms.JMSException;
-import javax.jms.Message;
-
 import com.example.demo.jms.consumer.Consumer;
 import com.example.demo.jms.consumer.FileWriterConsumer;
 import com.example.demo.jms.message.MyMessage;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.jms.support.converter.SimpleMessageConverter;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.jms.JMSException;
+import javax.jms.Message;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -106,10 +100,10 @@ public class BrokerService {
         String subscriptionId = "";
         Boolean producerIdExist = false;
         for (int i = 0; i < consumerObjList.size(); i++) { // Forschleife zum vergleichen das producerId mit dem
-                                                           // subscriptionId in den Consumer Objekte
+            // subscriptionId in den Consumer Objekte
 
             // cons = new Consumer(); // Zwischenspeicher
-             Consumer cons = (Consumer) consumerObjList.get(i); // casten von objekt in einer list zu Consumer Objekt
+            Consumer cons = (Consumer) consumerObjList.get(i); // casten von objekt in einer list zu Consumer Objekt
             subscriptionId = cons.getSubscriptions(); // subscriptionId enthält die subscription Liste
 
             if (subscriptionId.contains(id)) { // ob die subscriptionId enhält das ProducerId
@@ -177,17 +171,16 @@ public class BrokerService {
         return props;
     }
 
+    /**
+     * add new consumer to consumerObjList
+     * @param consumer the consumer to add
+     */
     public void addConsumer(FileWriterConsumer consumer) {
-        Consumer consumer1 =null;
-if(consumer.getType().equals("")) {
-    consumer1 =  consumer;
-    consumerObjList.add(consumer1);
-}else  consumerObjList.add(consumer);
-
-
-
-
-
+        Consumer consumer1 = null;
+        if (!consumer.getType().equals("FileWriterConsumer")) {
+            consumer1 = consumer;
+            consumerObjList.add(consumer1);
+        } else consumerObjList.add(consumer);
     }
 }
 
