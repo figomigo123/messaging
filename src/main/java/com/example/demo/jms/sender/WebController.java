@@ -2,7 +2,6 @@ package com.example.demo.jms.sender;
 
 import com.example.demo.jms.broker.BrokerService;
 
-import com.example.demo.jms.configration.WebSocketService;
 import com.example.demo.jms.consumer.Consumer;
 import com.example.demo.jms.consumer.ConsumerFactory;
 import com.example.demo.jms.message.MyMessage;
@@ -18,8 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(path = "/test")
 public class WebController {
-    @Autowired
-    WebSocketService webSocketService;
+
     @Autowired
     private JmsTemplate jmsTemplate;
 
@@ -29,7 +27,7 @@ public class WebController {
     @PostMapping("/sendMessagetoFirstQueue")
     public ResponseEntity<?> publishMessageToFirstQueue(@RequestBody MyMessage myMessage) {
         jmsTemplate.convertAndSend("first-Queue", myMessage);
-       // webSocketService.notifyUser("first-Queue",myMessage);
+       // brokerService.messageListenerAndForward(myMessage);
         System.out.println(myMessage.toString());
 
         return new ResponseEntity<>("sent", HttpStatus.OK);

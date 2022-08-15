@@ -6,7 +6,10 @@ import com.example.demo.jms.consumer.Consumer;
 import com.example.demo.jms.consumer.ConsumerFactory;
 import com.example.demo.jms.consumer.FileWriterConsumer;
 import com.example.demo.jms.message.MyMessage;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.jms.support.converter.SimpleMessageConverter;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -18,11 +21,13 @@ import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class BrokerService {
 
     private List<Consumer> consumerObjList = new ArrayList<>();
     private List<Producer> producerObjList = new ArrayList<>();
     ConsumerFactory consumerFactory = new ConsumerFactory();
+    private final SimpMessagingTemplate messagingTemplate;
 
     public List<Consumer> getConsumerObjList() {
         return  consumerObjList = consumerFactory.consumerObjList;
@@ -75,6 +80,10 @@ public class BrokerService {
 
                 } else if (cons.getType().equals("ConsoleWriterConsumer")) {
                     consoleWriterConsumer.receiveMessage(msg);
+                } else if (cons.getType().equals("WebSocket")) {
+                    String json = (new ObjectMapper()).writeValueAsString(msg);
+                    messagingTemplate.convertAndSendToUser(consumerObjList.get(i).getId(), "/topic/messages", json);
+                    //  jmsTemplate.(userId, "/topic/messages", json);
                 }
             }
             subscriptionId = "";

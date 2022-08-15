@@ -26,13 +26,10 @@ public class WebSocketChannelInterceptor implements ChannelInterceptor {
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         final StompHeaderAccessor accessor = readHeaderAccessor(message);
-
         if (accessor.getCommand() == StompCommand.CONNECT) {
-
             String wsId = readWebSocketIdHeader(accessor);
             String apiKey = readAuthKeyHeader(accessor);
             String sessionId = readSessionId(accessor);
-
             // authenticate the user and if that's successful add their user information to the headers.
 //            UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken(wsId, null);
 //            accessor.setUser(user);

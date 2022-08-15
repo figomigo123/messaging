@@ -2,9 +2,7 @@ var stompClient = null;
 
 $(document).ready(function() {
     console.log("Index page is ready");
-    $("#send-private").click(function() {
-        sendPrivateMessage();
-    });
+
     $("#connect").click(function() {
         connect();
     });
