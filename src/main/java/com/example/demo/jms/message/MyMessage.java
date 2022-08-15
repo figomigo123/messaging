@@ -6,8 +6,6 @@ import lombok.*;
 @Getter
 @Setter
 public class MyMessage implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     private String producerId;
     private String message;
     private String msgModule;

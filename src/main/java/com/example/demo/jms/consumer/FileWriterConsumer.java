@@ -25,11 +25,12 @@ public class FileWriterConsumer extends Consumer {
         return super.toString() + "Ordner path:" + path;
     }
 
+    @Override
     public void receiveMessage(MyMessage msg) throws IOException {
-        System.out.println("die empfangene Nachricht:" + msg);
         
         FileWriter fw = new FileWriter("/Users/oula/Documents/Ordner/file.txt",true);
         System.out.println("Hallo from FileWriter");
+        
         String msgString = String.valueOf(msg);  
      
         for (int i = 0; i < msgString.length(); i++) {
@@ -42,5 +43,7 @@ public class FileWriterConsumer extends Consumer {
         // close the file
         fw.close();
     }
+
+   
 
 }

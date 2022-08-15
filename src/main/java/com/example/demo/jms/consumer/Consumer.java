@@ -2,6 +2,8 @@ package com.example.demo.jms.consumer;
 
 
 
+import java.io.IOException;
+
 import com.example.demo.jms.message.MyMessage;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +15,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Consumer {
+public abstract class Consumer {
 
     private String name;
     private String description;
@@ -22,7 +24,7 @@ public class Consumer {
     private String type;
     private String propertiesFile;
 
-    public Consumer(String name){
+   public Consumer(String name){
         this.name=name;
     }
     @Override
@@ -32,8 +34,24 @@ public class Consumer {
                 + this.propertiesFile + "'";
 
     }
-
-   
-    //receiveMessage Methode 
+    public void receiveMessage(MyMessage msg) throws IOException {
+        System.out.println("die empfangene Nachricht:" + msg);
+    }
     
 }
+/*
+
+public interface Consumer {
+
+    String name = null;
+     String description = null;
+     String id = null;
+     String subscriptions = null;
+     String type = null;
+     String propertiesFile = null;
+
+
+    public void receiveMessage(MyMessage msg) throws IOException;
+
+}
+ */

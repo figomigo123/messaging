@@ -1,6 +1,7 @@
 package com.example.demo.jms.configration;
 
 import com.example.demo.jms.broker.BrokerService;
+import com.example.demo.jms.sender.ProducerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,41 +22,34 @@ import javax.jms.JMSException;
 @Configuration
 @EnableJms
 public class JmsConfig implements JmsListenerConfigurer {
-
-  
     @Autowired
     BrokerService brokerService;
-
+    ProducerFactory producerFactory = new ProducerFactory();
     List<String> queueNames = new ArrayList<>();
 
     @Override
     public void configureJmsListeners(JmsListenerEndpointRegistrar endpointRegistrar) {
-
         String queueName;
-
         try {
-            queueNames = brokerService.readProducerProperties();
-            System.out.println(queueNames.size());
+            queueNames = producerFactory.getInstanceFromPropertiesFiles();
+            System.out.println("QueueNamesSize"+queueNames);
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
+          //   TODO Auto-generated catch block
             e1.printStackTrace();
-        }
-
+       }
         for (int i = 0; i < queueNames.size(); i++) {
             SimpleJmsListenerEndpoint endpoint = new SimpleJmsListenerEndpoint();
-
             queueName = "";
             queueName = queueNames.get(i);
-
+            System.out.println("QueueName"+queueName);
             endpoint.setId(queueName);
             endpoint.setDestination(queueName);
             endpoint.setConcurrency("5-10");
+
             System.out.println(endpoint.getDestination());
-
             endpoint.setMessageListener(message -> {
-
                 try {
-                    brokerService.messageListener(message);
+                    brokerService.messageListenerAndForward(message);
                 } catch (JMSException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -66,8 +60,6 @@ public class JmsConfig implements JmsListenerConfigurer {
             endpointRegistrar.registerEndpoint(endpoint);
 
         }
-    }
-
-
-
+    
+}
 }
